@@ -1,5 +1,6 @@
 ﻿using Application.Common;
 using Application.DTOs.Todos;
+using Application.DTOs.Users;
 using Application.Extensions;
 using Application.ServiceInterfaces;
 using Domain.Enums;
@@ -17,9 +18,11 @@ namespace Todo.Controllers
 
         [Authorize(Policy = "EmployeePolicy")]
         [HttpGet]
-        public async Task<IActionResult> GetTasks()
+
+        [HttpGet]
+        public async Task<IActionResult> GetPaginatedTasks([FromQuery] TaskPageParams pageParam)
         {
-            var result = await _taskService.GetTasksAsync();
+            var result = await _taskService.GetPagedTasksAsync(pageParam);
 
             return Ok(result);
         }

@@ -24,7 +24,7 @@ public class TaskService : Service<Domain.Entities.Tasks.Task>, ITaskService
         return todos.Select(t => new TaskDTO(t.Id, t.Title, t.Description, t.DueDate));
     }
 
-    public async Task<PagedList<TaskDTO>> GetPagedUsersAsync(TaskPageParams pageParam)
+    public async Task<PagedList<TaskDTO>> GetPagedTasksAsync(TaskPageParams pageParam)
     {
         var query = _repository.TableNoTracking.AsQueryable();
 
@@ -35,6 +35,22 @@ public class TaskService : Service<Domain.Entities.Tasks.Task>, ITaskService
 
             query = query
                 .Where(c => c.Title.ToLower().Contains(searchKey));
+
+
+            if (pageParam.AssignTo != null)
+            {
+                query = query.Where(c => c.AssignToUserId == pageParam.AssignTo);
+            }
+
+            if (pageParam.Status != null)
+            {
+                query = query.Where(c => c.Status == (int)pageParam.Status);
+            }
+
+            if (pageParam.DueDate != null)
+            {
+                query = query.Where(c => c.DueDate == pageParam.DueDate);
+            }
         }
 
         query = query.OrderByDescending(c => c.Id);

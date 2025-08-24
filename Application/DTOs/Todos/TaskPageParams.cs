@@ -5,6 +5,7 @@ namespace Application.DTOs.Todos;
 
 public class TaskPageParams : PageParam
 {
-    public StatusEnum Status { get; set; }
-    public int AssignTo { get; set; }
+    public StatusEnum? Status { get; set; }
+    public int? AssignTo { get; set; }
+    public DateTime? DueDate { get; set; }
 }
