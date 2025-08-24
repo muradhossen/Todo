@@ -32,6 +32,7 @@ public interface IRepository<T> where T : class
     IQueryable<T> GetQueryable(Expression<Func<T, bool>> predicate = null);
 
     T GetFirstOrDefault(Expression<Func<T, bool>> predicate);
+    Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
 
     Task<ICollection<T>> GetManyAsync(Expression<Func<T, bool>> predicate);
     Task<int> CountAsync(Expression<Func<T, bool>> where);

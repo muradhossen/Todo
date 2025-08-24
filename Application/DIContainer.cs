@@ -1,5 +1,9 @@
 ﻿using Application.ServiceInterfaces;
-using Application.Services; 
+using Application.ServiceInterfaces.Token;
+using Application.ServiceInterfaces.Users;
+using Application.Services;
+using Application.Services.Token;
+using Application.Services.Users;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
@@ -8,7 +12,10 @@ namespace Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<ITodoService, TodoService>();
+            services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<ITeamService, TeamService>();
 
             return services;
         }

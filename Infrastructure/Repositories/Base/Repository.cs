@@ -143,6 +143,10 @@ public class Repository<T> : IRepository<T> where T : class
     {
         return Table.FirstOrDefault(predicate);
     }
+    public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
+    {
+        return await Table.FirstOrDefaultAsync(predicate);
+    }
     public virtual async Task<int> CountAsync()
     {
         return await Table.CountAsync();

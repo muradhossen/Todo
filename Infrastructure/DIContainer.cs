@@ -1,6 +1,8 @@
 ﻿using Application.RepositoryInterfaces;
+using Application.RepositoryInterfaces.Users;
 using Infrastructure.Persistance;
 using Infrastructure.Repositories;
+using Infrastructure.Repositories.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +19,10 @@ namespace Infrastructure
             });
 
 
-            services.AddScoped<ITodoRepository, TodoRepository>();
+            services.AddScoped<ITaskRepository, TodoRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITeamRepository, TeamRepository>();
+
             return services;
         }
     }
