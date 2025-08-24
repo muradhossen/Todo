@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+﻿using Application.DTOs.Todos;
 using Application.ServiceInterfaces.Base;
 using Domain.Entities.Todos;
 
