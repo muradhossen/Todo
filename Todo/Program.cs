@@ -1,10 +1,11 @@
 using Application;
 using Infrastructure;
+using Infrastructure.Persistance;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Linq;
+using System; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,13 @@ builder.Services
 
 var app = builder.Build();
 
+#region Auto Migration
+using var scop = app.Services.CreateScope();
+var services = scop.ServiceProvider;
+var context = services.GetRequiredService<ApplicationDbContext>();
+
+await context.Database.MigrateAsync();
+#endregion
 
 if (app.Environment.IsDevelopment())
 {

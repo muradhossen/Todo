@@ -1,27 +1,18 @@
-﻿using Infrastructure.Persistance;
-using Microsoft.AspNetCore.Http;
+﻿using Application.ServiceInterfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using Todo.Controllers.Base;
 
 namespace Todo.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TodoController : ControllerBase
+    public class TodoController(ITodoService todoService) : BaseApiController
     {
-        private readonly ApplicationDbContext _dbContext;
-
-        public TodoController(ApplicationDbContext dbContext)
-        {
-            this._dbContext = dbContext;
-        }
+        private readonly ITodoService _todoService = todoService;
 
         [HttpGet]
         public async Task<IActionResult> GetTodos()
         {
-            var result = await _dbContext.Todos.ToListAsync();
-
+            var result = await _todoService.GetTodosAsync();
 
             return Ok(result);
         }

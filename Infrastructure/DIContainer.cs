@@ -1,4 +1,6 @@
-﻿using Infrastructure.Persistance;
+﻿using Application.RepositoryInterfaces;
+using Infrastructure.Persistance;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,8 @@ namespace Infrastructure
                 option.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
             });
 
+
+            services.AddScoped<ITodoRepository, TodoRepository>();
             return services;
         }
     }
