@@ -16,15 +16,15 @@ namespace Todo.Controllers
             this._userService = userService;
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(RegistrationDTO registerDto)
-        { 
-             var result =await _userService.Registration(registerDto);
+        //[HttpPost("register")]
+        //public async Task<IActionResult> Register(RegistrationDTO registerDto)
+        //{ 
+        //     var result =await _userService.Registration(registerDto);
 
-            if (result.IsSuccess) return Ok(result);
+        //    if (result.IsSuccess) return Ok(result);
 
-            return BadRequest(result);
-        }
+        //    return BadRequest(result);
+        //}
 
         [HttpPost("login")]
         public async Task<ActionResult> Login(LoginDTO loginDto)
