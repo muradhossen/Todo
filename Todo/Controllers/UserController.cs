@@ -2,8 +2,11 @@
 using Application.DTOs.Todos;
 using Application.DTOs.Users;
 using Application.ServiceInterfaces.Users;
+using Domain.Entities.Users;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Security.Cryptography.Xml;
 using System.Threading.Tasks;
 using Todo.Controllers.Base;
@@ -14,10 +17,15 @@ namespace Todo.Controllers
     public class UserController : BaseApiController
     {
         private readonly IUserService _userService;
+        private readonly IValidator<UserCreateDTO> _createUserValidator;
+        private readonly IValidator<UserUpdateDTO> _updateUserValidator;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IValidator<UserCreateDTO> validator
+, IValidator<UserUpdateDTO> updateUserValidator)
         {
             this._userService = userService;
+            _createUserValidator = validator;
+            _updateUserValidator = updateUserValidator;
         }
 
 
@@ -46,6 +54,13 @@ namespace Todo.Controllers
         public async Task<IActionResult> Create([FromBody] UserCreateDTO request)
         {
 
+            var validation = await _createUserValidator.ValidateAsync(request);
+
+            if (!validation.IsValid)
+            {
+                return BadRequest(validation.Errors.Select(e => new { e.PropertyName, e.ErrorMessage }));
+            }
+
             var result = await _userService.CreateUserAsync(request);
 
             if (result.IsSuccess)
@@ -58,7 +73,14 @@ namespace Todo.Controllers
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UserUpdateDTO request)
-        { 
+        {
+
+            var validation = await _updateUserValidator.ValidateAsync(request);
+
+            if (!validation.IsValid)
+            {
+                return BadRequest(validation.Errors.Select(e => new { e.PropertyName, e.ErrorMessage }));
+            }
 
             var result = await _userService.UpdateUserAsync(id, request);
 
