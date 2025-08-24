@@ -17,7 +17,7 @@ namespace Todo.Controllers
         private readonly ITaskService _taskService = todoService;
 
         [Authorize(Policy = "EmployeePolicy")]
-        [HttpGet]
+     
 
         [HttpGet]
         public async Task<IActionResult> GetPaginatedTasks([FromQuery] TaskPageParams pageParam)

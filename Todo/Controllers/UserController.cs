@@ -31,7 +31,7 @@ namespace Todo.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetPaginatedUsers([FromQuery] UserPageParams pageParam)
-        {
+        { 
             var result =await _userService.GetPagedUsersAsync(pageParam);
 
             return Ok(result);

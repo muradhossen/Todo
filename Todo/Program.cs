@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -61,6 +62,17 @@ builder.Services.AddSwaggerGen(option =>
             });
 });
 
+
+#endregion
+
+#region Serelog
+
+// Configure Serilog
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.File("Logs/app.log", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 #endregion
 
