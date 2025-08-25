@@ -8,6 +8,7 @@ using Application.Validations;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
+
 namespace Application
 {
     public static class DIContainer
@@ -20,8 +21,7 @@ namespace Application
            
 
             services.AddValidatorsFromAssemblyContaining<UserCreateDTOValidator>();
-
-
+             
             return services;
         }
 
