@@ -24,7 +24,6 @@ namespace Todo.Controllers
             return Ok(result);
         }
 
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(long id)
         {
@@ -36,7 +35,6 @@ namespace Todo.Controllers
             }
             return BadRequest(result);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TodoCreateDTO request)
@@ -51,7 +49,6 @@ namespace Todo.Controllers
 
             return BadRequest(result);
         }
-
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(long id, [FromBody] TodoUpdateDTO request)

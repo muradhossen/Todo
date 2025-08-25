@@ -9,7 +9,7 @@ namespace Infrastructure.Persistance
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            //AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
         public DbSet<Todo> Todos { get; set; }
@@ -18,12 +18,13 @@ namespace Infrastructure.Persistance
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        { 
+        {
             // Task -> User (many-to-one)
             modelBuilder.Entity<Todo>()
                 .HasOne(t => t.AssignToUser)
                 .WithMany(u => u.Tasks)
-                .HasForeignKey(t => t.AssignToUserId);
+                .HasForeignKey(t => t.AssignToUserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

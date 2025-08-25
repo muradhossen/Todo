@@ -13,7 +13,7 @@ public class Todo : BaseEntity<long>
     [Required]
     public int Status { get; set; }
     public User AssignToUser { get; set; }
-    public int AssignToUserId { get; set; }
+    public int? AssignToUserId { get; set; }
     public User CreatedByUser { get; set; }
     public int CreatedByUserId { get; set; }
     public DateTime DueDate { get; set; }
