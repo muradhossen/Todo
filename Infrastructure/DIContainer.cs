@@ -20,8 +20,7 @@ namespace Infrastructure
 
 
             services.AddScoped<ITaskRepository, TodoRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ITeamRepository, TeamRepository>();
+            services.AddScoped<IUserRepository, UserRepository>(); 
 
             return services;
         }

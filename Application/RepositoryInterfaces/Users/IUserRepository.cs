@@ -6,4 +6,5 @@ namespace Application.RepositoryInterfaces.Users;
 public interface IUserRepository : IRepository<User>
 {
     Task<bool> IsExistAsync(string email);
+    Task<bool> IsExistAsync(int id);
 }

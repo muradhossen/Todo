@@ -1,4 +1,4 @@
 ﻿namespace Application.DTOs.Users;
 
-public record UserDto(int Id,string FullName, string Email, int Role, int? TeamId);
+public record UserDto(int Id,string FullName, string Email, int Role);
 

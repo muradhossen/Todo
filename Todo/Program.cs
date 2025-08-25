@@ -1,5 +1,5 @@
 using Application;
-using Application.Errors; 
+using Application.Middlewares;
 using Domain.Enums;
 using Infrastructure;
 using Infrastructure.Persistance;
@@ -101,15 +101,6 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AdminPolicy", policy =>
         policy.RequireRole(RoleEnum.Admin.ToString()));
 
-    // Manager policies
-    options.AddPolicy("ManagerPolicy", policy =>
-        policy.RequireRole(RoleEnum.Manager.ToString()));
-
-    // Employee policies
-    options.AddPolicy("EmployeePolicy", policy =>
-        policy.RequireRole(RoleEnum.Employee.ToString()));
-
-    // Custom employee-task check (optional, later we’ll extend with requirement handler)
 });
 
 var app = builder.Build();

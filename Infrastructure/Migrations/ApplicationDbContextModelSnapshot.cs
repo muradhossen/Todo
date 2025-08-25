@@ -22,7 +22,7 @@ namespace Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entities.Tasks.Task", b =>
+            modelBuilder.Entity("Domain.Entities.Tasks.Todo", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,9 +45,6 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TeamId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
@@ -58,29 +55,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("CreatedByUserId");
 
-                    b.HasIndex("TeamId");
-
-                    b.ToTable("Tasks");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Teams.Team", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Teams");
+                    b.ToTable("Todos");
                 });
 
             modelBuilder.Entity("Domain.Entities.Users.User", b =>
@@ -108,17 +83,12 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TeamId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TeamId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Tasks.Task", b =>
+            modelBuilder.Entity("Domain.Entities.Tasks.Todo", b =>
                 {
                     b.HasOne("Domain.Entities.Users.User", "AssignToUser")
                         .WithMany("Tasks")
@@ -132,31 +102,9 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Teams.Team", "Team")
-                        .WithMany("Tasks")
-                        .HasForeignKey("TeamId");
-
                     b.Navigation("AssignToUser");
 
                     b.Navigation("CreatedByUser");
-
-                    b.Navigation("Team");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Users.User", b =>
-                {
-                    b.HasOne("Domain.Entities.Teams.Team", "Team")
-                        .WithMany("Users")
-                        .HasForeignKey("TeamId");
-
-                    b.Navigation("Team");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Teams.Team", b =>
-                {
-                    b.Navigation("Tasks");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Domain.Entities.Users.User", b =>

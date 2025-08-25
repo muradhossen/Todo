@@ -31,28 +31,10 @@ namespace Infrastructure.Persistance
                     Role = (int)RoleEnum.Admin,
                     PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("Admin123!")),
                     PasswordSalt = hmac.Key
-                };
+                }; 
+            
 
-                var managerUser = new User
-                {
-                    FullName = "Manager",
-                    Email = "manager@demo.com",
-                    Role = (int)RoleEnum.Manager,
-                    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("Manager123!")),
-                    PasswordSalt = hmac.Key
-                };
-                var employeeUser = new User
-                {
-                    FullName = "Employee",
-                    Email = "employee@demo.com",
-                    Role = (int)RoleEnum.Employee,
-                    PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("Employee123!")),
-                    PasswordSalt = hmac.Key
-                };
-
-                users.Add(adminUser);
-                users.Add(managerUser);
-                users.Add(employeeUser);
+                users.Add(adminUser); 
 
 
                 await context.Users.AddRangeAsync(users);

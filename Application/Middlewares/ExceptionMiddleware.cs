@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Application.Common;
 
-namespace Application.Errors;
+namespace Application.Middlewares;
 
 public class ExceptionMiddleware
 {
@@ -34,7 +34,7 @@ public class ExceptionMiddleware
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            var response = _evn.IsDevelopment() ? Result.Failure($"{ex.Message} \n {ex.StackTrace?.ToString()}") :Result.Failure("Internal server Error");
+            var response = _evn.IsDevelopment() ? Result.Failure($"{ex.Message} \n {ex.StackTrace?.ToString()}") : Result.Failure("Internal server Error");
 
             var option = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 

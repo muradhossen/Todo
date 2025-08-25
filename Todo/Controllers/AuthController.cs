@@ -7,24 +7,24 @@ using Todo.Controllers.Base;
 
 namespace Todo.Controllers
 {
-    public class AccountController : BaseApiController
+    public class AuthController : BaseApiController
     {
         private readonly IUserService _userService;
 
-        public AccountController(IUserService userService)
+        public AuthController(IUserService userService)
         {
             this._userService = userService;
         }
 
-        //[HttpPost("register")]
-        //public async Task<IActionResult> Register(RegistrationDTO registerDto)
-        //{ 
-        //     var result =await _userService.Registration(registerDto);
+        [HttpPost("signup")]
+        public async Task<IActionResult> Register(RegistrationDTO registerDto)
+        {
+            var result = await _userService.Registration(registerDto);
 
-        //    if (result.IsSuccess) return Ok(result);
+            if (result.IsSuccess) return Ok(result);
 
-        //    return BadRequest(result);
-        //}
+            return BadRequest(result);
+        }
 
         [HttpPost("login")]
         public async Task<ActionResult> Login(LoginDTO loginDto)

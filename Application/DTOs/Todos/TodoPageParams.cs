@@ -3,7 +3,7 @@ using Domain.Enums;
 
 namespace Application.DTOs.Todos;
 
-public class TaskPageParams : PageParam
+public class TodoPageParams : PageParam
 {
     public StatusEnum? Status { get; set; }
     public int? AssignTo { get; set; }

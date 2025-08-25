@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    public class TodoRepository : Repository<Domain.Entities.Tasks.Task>, ITaskRepository
+    public class TodoRepository : Repository<Domain.Entities.Tasks.Todo>, ITaskRepository
     {
         private readonly ApplicationDbContext _dbContext;
 
@@ -15,9 +15,9 @@ namespace Infrastructure.Repositories
             this._dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Domain.Entities.Tasks.Task>> GetTodosAsync()
+        public async Task<IEnumerable<Domain.Entities.Tasks.Todo>> GetTodosAsync()
         {
-            return await _dbContext.Tasks.AsNoTracking().ToListAsync();
+            return await _dbContext.Todos.AsNoTracking().ToListAsync();
         }
     }
 }

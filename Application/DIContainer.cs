@@ -14,10 +14,10 @@ namespace Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<ITodoService, TodoService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<ITeamService, TeamService>();
+           
 
             services.AddValidatorsFromAssemblyContaining<UserCreateDTOValidator>();
 

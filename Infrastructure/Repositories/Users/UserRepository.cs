@@ -19,4 +19,8 @@ internal class UserRepository : Repository<User>, IUserRepository
     {
         return _dbContext.Users.AnyAsync(u => u.Email == email);
     }
+    public Task<bool> IsExistAsync(int id)
+    {
+        return _dbContext.Users.AnyAsync(u => u.Id == id);
+    }
 }

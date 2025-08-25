@@ -3,8 +3,8 @@
 
 namespace Application.RepositoryInterfaces;
 
-public interface ITaskRepository : IRepository<Domain.Entities.Tasks.Task>
+public interface ITaskRepository : IRepository<Domain.Entities.Tasks.Todo>
 {
-    Task<IEnumerable<Domain.Entities.Tasks.Task>> GetTodosAsync();
+    Task<IEnumerable<Domain.Entities.Tasks.Todo>> GetTodosAsync();
 
 }

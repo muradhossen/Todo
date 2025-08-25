@@ -1,6 +1,5 @@
 ﻿using Domain.Common;
-using Domain.Entities.Tasks;
-using Domain.Entities.Teams;
+using Domain.Entities.Tasks; 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -15,8 +14,5 @@ public class User : BaseEntity<int>
     public int Role { get; set; }
     public byte[] PasswordHash { get; set; }
     public byte[] PasswordSalt { get; set; }
-    public ICollection<Task> Tasks { get; set; } = new List<Task>();
-
-    public Team Team { get; set; }
-    public int? TeamId { get; set; }
+    public ICollection<Todo> Tasks { get; set; } = new List<Todo>(); 
 }
