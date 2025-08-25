@@ -35,9 +35,7 @@ namespace Application.Services
 
                 query = query
                     .Where(c => c.Name.ToLower().Contains(searchKey));
-            }
-
-            query = query.OrderByDescending(c => c.Id);
+            } 
 
             if (pageParam.Order == -1)
             {
