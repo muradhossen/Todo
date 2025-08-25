@@ -116,6 +116,7 @@ public class TodoService : Service<Todo>, ITodoService
 
         todo.Description = request.Description;
         todo.Title = request.Title;
+        todo.DueDate = request.DueDate;
 
 
         var isUpdated = await _repository.UpdateAsync(todo);
