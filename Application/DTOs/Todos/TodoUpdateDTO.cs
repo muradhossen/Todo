@@ -2,5 +2,5 @@
 
 namespace Application.DTOs.Todos;
 
-public record TodoUpdateDTO(string Title, string Description, StatusEnum Status,int AssignToUserId, int CreatedByUserId, DateTime DueDate);
+public record TodoUpdateDTO(string Title, string Description, StatusEnum Status,int AssignToUserId, DateTime DueDate);
 

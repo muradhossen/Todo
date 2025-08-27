@@ -6,14 +6,14 @@ namespace Application.Extensions;
 
 public static class MapperExtension
 {
-    public static Todo ToEntity(this TodoCreateDTO dto)
+    public static Todo ToEntity(this TodoCreateDTO dto, int createdByUserId)
     {
         return new Todo
         {
             Title = dto.Title,
             Status = (int)StatusEnum.Todo,
             AssignToUserId = dto.AssignToUserId,
-            CreatedByUserId = dto.CreatedByUserId,
+            CreatedByUserId = createdByUserId,
             Description = dto.Description,
             DueDate = dto.DueDate
         };
@@ -26,8 +26,7 @@ public static class MapperExtension
             Id = id,
             Title = dto.Title,
             Status = (int)dto.Status,
-            AssignToUserId = dto.AssignToUserId,
-            CreatedByUserId = dto.CreatedByUserId,
+            AssignToUserId = dto.AssignToUserId, 
             Description = dto.Description,
             DueDate = dto.DueDate
         };

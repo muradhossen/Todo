@@ -1,11 +1,13 @@
 ﻿using Application.Common;
 using Application.DTOs.Todos;
 using Application.DTOs.Users;
+using Application.Errors;
 using Application.Extensions;
 using Application.ServiceInterfaces;
 using Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 using Todo.Controllers.Base;
 
@@ -21,6 +23,12 @@ namespace Todo.Controllers
         {
             var result = await _todoService.GetPagedTodosAsync(pageParam);
 
+            if (result.Value != null && result.Value.Any())
+            {
+                return NotFound(Result.Failure(TodoError.NotFound()));
+            }
+
+            Response.AddPaginationHeader(result.Value.CurrentPage, result.Value.PageSize, result.Value.TotalCount, result.Value.TotalPage);
             return Ok(result);
         }
 

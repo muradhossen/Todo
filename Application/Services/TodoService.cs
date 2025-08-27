@@ -80,7 +80,7 @@ public class TodoService : Service<Todo>, ITodoService
             return Result<TodoDTO>.Failure(TodoError.AssignedUserDoseNotExist());
         } 
 
-        var todo = request.ToEntity();
+        var todo = request.ToEntity(createdByUserId);
 
         var isCreated = await _repository.AddAsync(todo); 
 
@@ -102,7 +102,11 @@ public class TodoService : Service<Todo>, ITodoService
             return Result<TodoDTO>.Failure(TodoError.NotFound(todo.Title));
         } 
 
-        todo = request.ToEntity(id);
+        todo.Title = request.Title;
+        todo.Description = request.Description;
+        todo.DueDate = request.DueDate;
+        todo.Status = (int)request.Status;
+        todo.AssignToUserId = request.AssignToUserId;
 
         var isUpdated = await _repository.UpdateAsync(todo);
 
