@@ -1,3 +1,8 @@
+# Project Description:
+
+This is a simple Todo application, allow user to assign a todo (task) to other user or the user himself.
+It has implemented role base authentication where only admin user can create,update or delete the todo items and any user can view the todo items.
+
 # Run instructions:
  
 1. Clone the application using : git clone https://github.com/muradhossen/Todo.git
@@ -6,8 +11,3 @@
 
 Default user :
 1. Admin : admin@demo.com / Admin123!
-
-# Project Description:
-
-This is a simple Todo application, allow user to assign a todo (task) to other user or the user himself.
-It has implemented role base authentication where only admin user can create,update or delete the todo items and any user can view the todo items.
