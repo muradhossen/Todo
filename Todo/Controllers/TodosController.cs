@@ -18,6 +18,7 @@ namespace Todo.Controllers
     {
         private readonly ITodoService _todoService = todoService;
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetPaginatedTasks([FromQuery] TodoPageParams pageParam)
         {
