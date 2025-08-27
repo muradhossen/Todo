@@ -1,3 +1,3 @@
 ﻿namespace Application.DTOs.Todos;
 
-public record TodoCreateDTO(string Title, string Description, DateTime DueDate,int AssignToUserId);
+public record TodoCreateDTO(string Title, string Description, int AssignToUserId, int CreatedByUserId, DateTime DueDate);

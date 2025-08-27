@@ -7,8 +7,7 @@ using Application.ServiceInterfaces.Base;
 namespace Application.ServiceInterfaces;
 
 public interface ITodoService : IService<Domain.Entities.Tasks.Todo>
-{
-    Task<IEnumerable<TodoDTO>> GetTasksAsync(); 
+{ 
     Task<Result<PagedList<TodoDTO>>> GetPagedTodosAsync(TodoPageParams pageParam);
     Task<Result<TodoDTO>> CreateTodoAsync(int createdByUserId, TodoCreateDTO request);
     Task<Result<TodoDTO>> UpdateTodoAsync(long id, TodoUpdateDTO request);

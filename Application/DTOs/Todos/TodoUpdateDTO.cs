@@ -1,4 +1,6 @@
-﻿namespace Application.DTOs.Todos;
+﻿using Domain.Enums;
 
-public record TodoUpdateDTO(string Title, string Description, DateTime DueDate);
+namespace Application.DTOs.Todos;
+
+public record TodoUpdateDTO(string Title, string Description, StatusEnum Status,int AssignToUserId, int CreatedByUserId, DateTime DueDate);
 

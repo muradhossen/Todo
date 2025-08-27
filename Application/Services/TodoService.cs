@@ -1,6 +1,8 @@
 ﻿using Application.Common;
 using Application.Common.Pagination;
 using Application.DTOs.Todos;
+using Application.Errors;
+using Application.Extensions;
 using Application.RepositoryInterfaces;
 using Application.RepositoryInterfaces.Users;
 using Application.ServiceInterfaces;
@@ -23,12 +25,7 @@ public class TodoService : Service<Todo>, ITodoService
         _userRepository = userRepository;
     }
 
-    public async Task<IEnumerable<TodoDTO>> GetTasksAsync()
-    {
-        var todos = await _repository.GetTodosAsync();
-
-        return todos.Select(t => new TodoDTO(t.Id, t.Title, t.Description, t.DueDate));
-    }
+ 
 
     public async Task<Result<PagedList<TodoDTO>>> GetPagedTodosAsync(TodoPageParams pageParam)
     {
@@ -66,7 +63,7 @@ public class TodoService : Service<Todo>, ITodoService
             query = query.OrderByDescending(c => c.Id);
         }
 
-        var mappedDate = query.Select(x => new TodoDTO(x.Id, x.Title, x.Description, x.DueDate));
+        var mappedDate = query.Select(x => x.ToDto());
 
         var pagedDate = await PagedList<TodoDTO>.CreateAsync(mappedDate, pageParam.PageSize, pageParam.PageNumber);
 
@@ -80,28 +77,19 @@ public class TodoService : Service<Todo>, ITodoService
 
         if (!isUserExist)
         {
-            return Result<TodoDTO>.Failure("Assigned user dosen't exist!");
-        }
+            return Result<TodoDTO>.Failure(TodoError.AssignedUserDoseNotExist());
+        } 
 
-        var todo = new Todo
-        {
-            Title = request.Title,
-            Description = request.Description,
-            DueDate = request.DueDate,
-            AssignToUserId = request.AssignToUserId,
-            Status = (int)StatusEnum.Todo,
-            CreatedByUserId = createdByUserId
-        };
+        var todo = request.ToEntity();
 
-        var isCreated = await _repository.AddAsync(todo);
-
+        var isCreated = await _repository.AddAsync(todo); 
 
         if (isCreated)
         {
-            return Result<TodoDTO>.Success(new TodoDTO(todo.Id, todo.Title, todo.Description, todo.DueDate));
+            return Result<TodoDTO>.Success(todo.ToDto());
         }
 
-        return Result<TodoDTO>.Failure($"Failed to update todo item!");
+        return Result<TodoDTO>.Failure(TodoError.FailedToUpdate());
     }
 
     public async Task<Result<TodoDTO>> UpdateTodoAsync(long id, TodoUpdateDTO request)
@@ -111,7 +99,7 @@ public class TodoService : Service<Todo>, ITodoService
 
         if (todo is null)
         {
-            return Result<TodoDTO>.Failure($" {request.Title} todo item dosen't exist!");
+            return Result<TodoDTO>.Failure(TodoError.NotFound(todo.Title));
         }
 
         todo.Description = request.Description;
@@ -123,10 +111,10 @@ public class TodoService : Service<Todo>, ITodoService
 
         if (isUpdated)
         {
-            return Result<TodoDTO>.Success(new TodoDTO(todo.Id, todo.Title, todo.Description, todo.DueDate));
+            return Result<TodoDTO>.Success(todo.ToDto());
         }
 
-        return Result<TodoDTO>.Failure("Failed to update todo");
+        return Result<TodoDTO>.Failure("Failed to update todo!");
     }
 
     public async Task<Result<TodoDTO>> GetTodoByIdAsync(long id)
@@ -135,9 +123,9 @@ public class TodoService : Service<Todo>, ITodoService
 
         if (todo is null)
         {
-            return Result<TodoDTO>.Failure("Todo item dosen't exist!");
+            return Result<TodoDTO>.Failure(TodoError.NotFound());
         }
 
-        return Result<TodoDTO>.Success(new TodoDTO(todo.Id,todo.Title,todo.Description,todo.DueDate));
+        return Result<TodoDTO>.Success(todo.ToDto());
     }
 }
