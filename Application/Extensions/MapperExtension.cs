@@ -19,10 +19,11 @@ public static class MapperExtension
         };
     }
 
-    public static Todo ToEntity(this TodoUpdateDTO dto)
+    public static Todo ToEntity(this TodoUpdateDTO dto, long id)
     {
         return new Todo
         {
+            Id = id,
             Title = dto.Title,
             Status = (int)dto.Status,
             AssignToUserId = dto.AssignToUserId,

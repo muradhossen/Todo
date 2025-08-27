@@ -100,12 +100,9 @@ public class TodoService : Service<Todo>, ITodoService
         if (todo is null)
         {
             return Result<TodoDTO>.Failure(TodoError.NotFound(todo.Title));
-        }
+        } 
 
-        todo.Description = request.Description;
-        todo.Title = request.Title;
-        todo.DueDate = request.DueDate;
-
+        todo = request.ToEntity(id);
 
         var isUpdated = await _repository.UpdateAsync(todo);
 
